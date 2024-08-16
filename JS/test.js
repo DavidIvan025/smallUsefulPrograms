@@ -6,32 +6,60 @@ Function.prototype.method = function (name, func) {
     }
 };
 
-var Quo = function (string) {
-    this.status = string;
+/* ---------------------------------[jsp01] Count total of nodes with specific attribute name----------------------------------------- */
+
+var walk_the_DOM = function walk(node, func) {
+    func(node);
+    node = node.firstChild;
+    while (node) {
+        walk(node, func);
+        node = node.nextSibling;
+    }
 };
-// called get_status.
-Quo.prototype.get_statu = function () {
-    return this.status;
+// Define a getElementsByAttribute function. It
+// takes an attribute name string and an optional
+// matching value. It calls walk_the_DOM, passing it a
+// function that looks for an attribute name in the
+// node. The matching nodes are accumulated in a
+// results array.
+var getElementsByAttribute = function (att, value) {
+    var results = [];
+    walk_the_DOM(document.body, function (node) {
+        var actual = node.nodeType === 1 && node.getAttribute(att);
+        if (typeof actual === 'string' &&
+            (actual === value || typeof value !== 'string')) {
+            results.push(node);
+        }
+    });
+    return results;
 };
-// Make an instance of Quo.
-var myQuo = new Quo("confused");
-document.writeln(myQuo.get_statu());
 
+/* ---------------------------------[jsp02] Object that produces a serial number ----------------------------------------- */
 
-var statusObject = {
-    status: 'A-OK'
+var serial_maker = function () {
+    // Produce an object that produces unique strings. A
+    // unique string is made up of two parts: a prefix
+    // and a sequence number. The object comes with
+    // methods for setting the prefix and sequence
+    // number, and a gensym method that produces unique
+    // strings.
+    var prefix = '';
+    var seq = 0;
+    return {
+        set_prefix: function (p) {
+            prefix = String(p);
+        },
+        set_seq: function (s) {
+            seq = s;
+        },
+        gensym: function () {
+            var result = prefix + seq;
+            seq += 1;
+            return result;
+        }
+    };
 };
-
-// statusObject does not inherit from Quo.prototype,
-// but we can invoke the get_status method on
-// statusObject even though statusObject does not have
-// a get_status method.
-var status = Quo.prototype.get_statu.apply(statusObject);
-
-document.writeln(status)
-
-
-Number.method('integer', function () {
-    return Math[this < 0 ? 'ceil' : 'floor'](this);
-});
-document.writeln((-10 / 3).integer());
+var seqer = serial_maker();
+seqer.set_prefix('Q');
+seqer.set_seq(1000);
+var unique = seqer.gensym();
