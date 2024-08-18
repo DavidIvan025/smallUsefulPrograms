@@ -1,3 +1,16 @@
+// Function to iterate without recursion. (Nested high-level objects)
+function forEachNested(O, f, cur){
+  O = [ O ]; // ensure that f is called with the top-level object
+  while (O.length) // keep on processing the top item on the stack
+      if(
+         !f( cur = O.pop() ) && // do not spider down if `f` returns true
+         cur instanceof Object && // ensure cur is an object, but not null 
+         [Object, Array].includes(cur.constructor) //limit search to [] and {}
+      ) O.push.apply(O, Object.values(cur)); //search all values deeper inside
+}
+
+/* ---------------------------------[jsop01] Find unique value on a provided array----------------------------------------- */
+
 function findUniq(arr) {
   const elementCounts = {};
 
