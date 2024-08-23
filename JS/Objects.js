@@ -31,7 +31,7 @@ function findUniq(arr) {
 }
 console.log(findUniq([0, 0, 1, 1, 389, 388, 387, 399, 399, 388, 389, 1]))
 
-/* ---------------------------------[jsop01] Replace letters by summing the 13th of every letter of the alphabet----------------------------------------- */
+/* ---------------------------------[jsop02] Replace letters by summing the 13th of every letter of the alphabet----------------------------------------- */
 
 function rot13(message) {
   var alpha = {

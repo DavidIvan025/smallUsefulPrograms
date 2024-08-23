@@ -188,4 +188,24 @@ myObject.on("greet", function () {
     console.log("hello, " + this.name + "!");
 });
 
-myObject.fire("greet")
+// myObject.fire("greet")
+
+/* ---------------------------------[jsp05] Sort words by the numbers in the given string----------------------------------------- */
+
+var order = (words) => words.split(" ").sort((a, b) => a.match(/\d/) - b.match(/\d/)).join(" ");
+// console.log( order("is2 Thi1s T4est 3a 222s"))
+
+/* ---------------------------------[jsp06] Return middle letter if it's odd or two middle if even of a given string----------------------------------------- */
+
+var getMiddle = (s) => {
+    let mid = Math.floor(s.length / 2);
+    return s.length % 2 === 0 
+        ? s.slice(mid - 1, mid + 1)
+        : s.charAt(mid);
+}
+// console.log(getMiddle("tesst"))
+
+/* ---------------------------------[jsp07] Replace numbers depending on the ternary operator----------------------------------------- */
+
+var fakeBin = x => x.split("").map(z => z < "5" ? "0": "1").join("")
+// console.log(fakeBin('78272525'))
